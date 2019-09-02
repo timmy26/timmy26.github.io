@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="chinese (simplified)">
+<head>
+	<meta charset="utf-8">
+	<title>Vue.js 数据交互 — Timmyxu的技术博客</title>
+	<meta name="description" content="Title: Vue.js 数据交互; Date: 2015-09-20; Author: Timmy">
+	<meta name="author" content="Timmy">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+		<script src="/theme/html5.js"></script>
+		<![endif]-->
+	<link href="/theme/css/ipython.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/simplex/bootstrap.min.css" rel="stylesheet">
+	<link href="/theme/css/local.css" rel="stylesheet">
+	<link href="/theme/css/pygments.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+	<div class="page-header">
+		<h1><a href="/">Timmyxu的技术博客</a>
+			<br>	</div>
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="text-center article-header">
+		<h1 itemprop="name headline" class="article-title">Vue.js 数据交互</h1>
+		<span itemprop="author" itemscope itemtype="http://schema.org/Person">
+			<h4 itemprop="name">Timmy</h4>
+		</span>
+		<time datetime="2015-09-20T09:20:00+02:00" itemprop="datePublished">周日 20 九月 2015</time>
+	</div>
+	<div>
+		Category:
+		<span itemprop="articleSection">
+			<a href="/category/ji-zhu.html" rel="category">技术</a>
+		</span>
+	</div>
+ 
+	<div>
+		Tags:
+		<span itemprop="keywords">
+			<a href="/tag/pelican.html" rel="tag">pelican</a>
+		</span>
+		<span itemprop="keywords">
+			<a href="/tag/publishing.html" rel="tag">publishing</a>
+		</span>
+	</div>
+	<div itemprop="articleBody" class="article-body"><h2>数据交互</h2>
+<p>vue.js没有集成ajax功能，要使用ajax功能，可以使用vue官方推荐的axios.js库来做ajax的交互。 axios库的下载地址：<a href="https://github.com/axios/axios/releases">https://github.com/axios/axios/releases</a></p>
+<h4>axios完整写法：</h4>
+<div class="highlight"><pre><span></span><span class="n">axios</span><span class="p">(</span><span class="err">{</span>
+  <span class="k">method</span><span class="p">:</span> <span class="s1">&#39;post&#39;</span><span class="p">,</span>
+  <span class="n">url</span><span class="p">:</span> <span class="s1">&#39;/user/12345&#39;</span><span class="p">,</span>
+  <span class="k">data</span><span class="p">:</span> <span class="err">{</span>
+    <span class="n">firstName</span><span class="p">:</span> <span class="s1">&#39;Fred&#39;</span><span class="p">,</span>
+    <span class="n">lastName</span><span class="p">:</span> <span class="s1">&#39;Flintstone&#39;</span>
+  <span class="err">}</span>
+<span class="err">}</span><span class="p">);</span>
+</pre></div>
+
+
+<p>axios请求的写法也写成get方式后post方式。</p>
+<h4>执行get请求</h4>
+<div class="highlight"><pre><span></span><span class="o">//</span> 为给定 <span class="nv">ID</span> 的 <span class="nv">user</span> 创建请求
+<span class="o">//</span> <span class="nv">then</span>是请求成功时的响应，<span class="nv">catch</span>是请求失败时的响应
+
+<span class="nv">axios</span>.<span class="nv">get</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">/user?ID=12345</span><span class="s1">&#39;</span><span class="ss">)</span>
+.<span class="k">then</span><span class="ss">(</span><span class="nv">function</span> <span class="ss">(</span><span class="nv">response</span><span class="ss">)</span> {
+  <span class="nv">console</span>.<span class="nv">log</span><span class="ss">(</span><span class="nv">response</span><span class="ss">)</span><span class="c1">;</span>
+}<span class="ss">)</span>
+.<span class="nv">catch</span><span class="ss">(</span><span class="nv">function</span> <span class="ss">(</span><span class="nv">error</span><span class="ss">)</span> {
+  <span class="nv">console</span>.<span class="nv">log</span><span class="ss">(</span><span class="nv">error</span><span class="ss">)</span><span class="c1">;</span>
+}<span class="ss">)</span><span class="c1">;</span>
+
+
+<span class="o">//</span> 可选地，上面的请求可以这样做
+<span class="nv">axios</span>.<span class="nv">get</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">/user</span><span class="s1">&#39;</span>, {
+  <span class="nb">params</span>: {
+    <span class="nv">ID</span>: <span class="mi">12345</span>
+  }
+}<span class="ss">)</span>
+.<span class="k">then</span><span class="ss">(</span><span class="nv">function</span> <span class="ss">(</span><span class="nv">response</span><span class="ss">)</span> {
+  <span class="nv">console</span>.<span class="nv">log</span><span class="ss">(</span><span class="nv">response</span><span class="ss">)</span><span class="c1">;</span>
+}<span class="ss">)</span>
+.<span class="nv">catch</span><span class="ss">(</span><span class="nv">function</span> <span class="ss">(</span><span class="nv">error</span><span class="ss">)</span> {
+  <span class="nv">console</span>.<span class="nv">log</span><span class="ss">(</span><span class="nv">error</span><span class="ss">)</span><span class="c1">;</span>
+}<span class="ss">)</span><span class="c1">;</span>
+</pre></div>
+
+
+<h4>执行post请求</h4>
+<div class="highlight"><pre><span></span><span class="nv">axios</span>.<span class="nv">post</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">/user</span><span class="s1">&#39;</span>, {
+  <span class="nv">firstName</span>: <span class="s1">&#39;</span><span class="s">Fred</span><span class="s1">&#39;</span>,
+  <span class="nv">lastName</span>: <span class="s1">&#39;</span><span class="s">Flintstone</span><span class="s1">&#39;</span>
+}<span class="ss">)</span>
+.<span class="k">then</span><span class="ss">(</span><span class="nv">function</span> <span class="ss">(</span><span class="nv">response</span><span class="ss">)</span> {
+  <span class="nv">console</span>.<span class="nv">log</span><span class="ss">(</span><span class="nv">response</span><span class="ss">)</span><span class="c1">;</span>
+}<span class="ss">)</span>
+.<span class="nv">catch</span><span class="ss">(</span><span class="nv">function</span> <span class="ss">(</span><span class="nv">error</span><span class="ss">)</span> {
+  <span class="nv">console</span>.<span class="nv">log</span><span class="ss">(</span><span class="nv">error</span><span class="ss">)</span><span class="c1">;</span>
+}<span class="ss">)</span><span class="c1">;</span>
+</pre></div></div>
+	<hr>
+	<h2>Comments</h2>
+</div>
+		</div>
+	</div> 	<!-- <hr> -->
+</div> <!-- /container -->
+<footer class="aw-footer bg-danger">
+	<div class="container"> <!-- footer -->
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1">
+				<div class="row">
+					<div class="col-md-3">
+						<h4>Navigation</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="">Timmyxu的技术博客</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Author</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="#">You can add links in your config file</a></li>
+							<li><a href="#">Another social link</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Categories</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="/category/技术.html">技术 (10)</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Links</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="http://getpelican.com/">Pelican</a></li>
+							<li><a href="http://python.org/">Python.org</a></li>
+							<li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+							<li><a href="#">You can modify those links in your config file</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 text-center center-block aw-bottom">
+			<p>&copy; Timmy 2016</p>
+			<p>Powered by Pelican</p>
+		</div>
+	</div>
+</div>
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+	$("div.collapseheader").click(function () {
+		$header = $(this).children("span").first();
+		$codearea = $(this).children(".input_area");
+		$codearea.slideToggle(500, function () {
+			$header.text(function () {
+				return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+			});
+		});
+	});
+});
+</script>
+</body>
+</html>

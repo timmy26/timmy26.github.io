@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="chinese (simplified)">
+<head>
+	<meta charset="utf-8">
+	<title>数据请求及跨域 — Timmyxu的技术博客</title>
+	<meta name="description" content="Title: 数据请求及跨域; Date: 2016-03-06; Author: Timmy">
+	<meta name="author" content="Timmy">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+		<script src="/theme/html5.js"></script>
+		<![endif]-->
+	<link href="/theme/css/ipython.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/simplex/bootstrap.min.css" rel="stylesheet">
+	<link href="/theme/css/local.css" rel="stylesheet">
+	<link href="/theme/css/pygments.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+	<div class="page-header">
+		<h1><a href="/">Timmyxu的技术博客</a>
+			<br>	</div>
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="text-center article-header">
+		<h1 itemprop="name headline" class="article-title">数据请求及跨域</h1>
+		<span itemprop="author" itemscope itemtype="http://schema.org/Person">
+			<h4 itemprop="name">Timmy</h4>
+		</span>
+		<time datetime="2016-03-06T08:30:00+01:00" itemprop="datePublished">周日 06 三月 2016</time>
+	</div>
+	<div>
+		Category:
+		<span itemprop="articleSection">
+			<a href="/category/ji-zhu.html" rel="category">技术</a>
+		</span>
+	</div>
+ 
+	<div>
+		Tags:
+		<span itemprop="keywords">
+			<a href="/tag/pelican.html" rel="tag">pelican</a>
+		</span>
+		<span itemprop="keywords">
+			<a href="/tag/publishing.html" rel="tag">publishing</a>
+		</span>
+	</div>
+	<div itemprop="articleBody" class="article-body"><h2>数据请求及跨域</h2>
+<h4>数据请求</h4>
+<p>数据请求使用的是ajax，在vue中使用的axios.js，这个文件可以在index.html文件中引入，也可以作为模块导入，在main.js中导入这个模块，然后将它绑定在Vue类的原型上。</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">axios</span> <span class="nn">from</span> <span class="s1">&#39;axios&#39;</span>
+<span class="n">Vue</span><span class="o">.</span><span class="n">prototype</span><span class="o">.</span><span class="n">axios</span> <span class="o">=</span> <span class="n">axios</span>
+</pre></div>
+
+
+<p>在组件的js代码中使用axios：</p>
+<div class="highlight"><pre><span></span><span class="n">this</span><span class="p">.</span><span class="n">axios</span><span class="p">(</span><span class="err">{</span><span class="p">......</span><span class="err">}</span><span class="p">)</span>
+</pre></div>
+
+
+<h4>跨域请求</h4>
+<p>vue的自动化工具提供了开发的服务器，我们在这个服务器环境下开发，改动代码可以马上更新显示，错误了还有代码提示，非常方便，但是，如果我们组件中需要数据，而且数据在另一个服务器环境下运行，我们就需要跨域请求数据，vue工具中可以使用代理来跨域请求，设置的方法是：在项目的config文件夹中，打开index.js,在proxyTable一项中设置：</p>
+<div class="highlight"><pre><span></span><span class="o">//</span> <span class="s1">&#39;http://localhost:7890&#39;</span> <span class="err">表示的是要跨域请求的地址</span>
+<span class="o">//</span> <span class="err">如果请求的地址是：</span><span class="s1">&#39;http://localhost:7890/index_data&#39;</span>
+<span class="o">//</span> <span class="err">在请求时就可以写成</span><span class="p">:</span> <span class="s1">&#39;/apis/index_data&#39;</span>
+
+<span class="s1">&#39;/apis&#39;</span><span class="p">:</span> <span class="err">{</span>
+    <span class="n">target</span><span class="p">:</span> <span class="s1">&#39;http://localhost:7890&#39;</span><span class="p">,</span> 
+    <span class="n">changeOrigin</span><span class="p">:</span> <span class="k">true</span><span class="p">,</span>
+    <span class="n">pathRewrite</span><span class="p">:</span> <span class="err">{</span>
+        <span class="s1">&#39;^/apis&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span>
+    <span class="err">}</span>              
+<span class="err">}</span>
+</pre></div></div>
+	<hr>
+	<h2>Comments</h2>
+</div>
+		</div>
+	</div> 	<!-- <hr> -->
+</div> <!-- /container -->
+<footer class="aw-footer bg-danger">
+	<div class="container"> <!-- footer -->
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1">
+				<div class="row">
+					<div class="col-md-3">
+						<h4>Navigation</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="">Timmyxu的技术博客</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Author</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="#">You can add links in your config file</a></li>
+							<li><a href="#">Another social link</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Categories</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="/category/技术.html">技术 (10)</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Links</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="http://getpelican.com/">Pelican</a></li>
+							<li><a href="http://python.org/">Python.org</a></li>
+							<li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+							<li><a href="#">You can modify those links in your config file</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 text-center center-block aw-bottom">
+			<p>&copy; Timmy 2016</p>
+			<p>Powered by Pelican</p>
+		</div>
+	</div>
+</div>
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+	$("div.collapseheader").click(function () {
+		$header = $(this).children("span").first();
+		$codearea = $(this).children(".input_area");
+		$codearea.slideToggle(500, function () {
+			$header.text(function () {
+				return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+			});
+		});
+	});
+});
+</script>
+</body>
+</html>

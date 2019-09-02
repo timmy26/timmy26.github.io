@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="chinese (simplified)">
+<head>
+	<meta charset="utf-8">
+	<title>Nginx主要用来干什么 — Timmyxu的技术博客</title>
+	<meta name="description" content="Title: Nginx主要用来干什么; Date: 2015-10-08; Author: Timmy">
+	<meta name="author" content="Timmy">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+		<script src="/theme/html5.js"></script>
+		<![endif]-->
+	<link href="/theme/css/ipython.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/simplex/bootstrap.min.css" rel="stylesheet">
+	<link href="/theme/css/local.css" rel="stylesheet">
+	<link href="/theme/css/pygments.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+	<div class="page-header">
+		<h1><a href="/">Timmyxu的技术博客</a>
+			<br>	</div>
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="text-center article-header">
+		<h1 itemprop="name headline" class="article-title">Nginx主要用来干什么</h1>
+		<span itemprop="author" itemscope itemtype="http://schema.org/Person">
+			<h4 itemprop="name">Timmy</h4>
+		</span>
+		<time datetime="2015-10-08T10:20:00+02:00" itemprop="datePublished">周四 08 十月 2015</time>
+	</div>
+	<div>
+		Category:
+		<span itemprop="articleSection">
+			<a href="/category/ji-zhu.html" rel="category">技术</a>
+		</span>
+	</div>
+ 
+	<div>
+		Tags:
+		<span itemprop="keywords">
+			<a href="/tag/pelican.html" rel="tag">pelican</a>
+		</span>
+		<span itemprop="keywords">
+			<a href="/tag/publishing.html" rel="tag">publishing</a>
+		</span>
+	</div>
+	<div itemprop="articleBody" class="article-body"><p>1、<strong>静态HTTP服务器</strong></p>
+<p>首先，Nginx是一个HTTP服务器，可以将服务器上的静态文件（如HTML、图片）通过HTTP协议展现给客户端。</p>
+<p>配置：</p>
+<ol>
+<li><code>server {</code></li>
+<li><code>listen80; # 端口号</code></li>
+<li><code>location / {</code></li>
+<li><code>root /usr/share/nginx/html; # 静态文件路径</code></li>
+<li><code>}</code></li>
+<li><code>}</code></li>
+</ol>
+<p>2、<strong>反向代理服务器</strong></p>
+<p>什么是反向代理？</p>
+<p>客户端本来可以直接通过HTTP协议访问某网站应用服务器，网站管理员可以在中间加上一个Nginx，客户端请求Nginx，Nginx请求应用服务器，然后将结果返回给客户端，此时Nginx就是反向代理服务器。</p>
+<p>配置：</p>
+<ol>
+<li><code>server {</code></li>
+<li><code>listen80;</code></li>
+<li><code>location / {</code></li>
+<li><code>proxy_pass http://192.168.20.1:8080; # 应用服务器HTTP地址</code></li>
+<li><code>}</code></li>
+<li><code>}</code></li>
+</ol>
+<p>既然服务器可以直接HTTP访问，为什么要在中间加上一个反向代理，不是多此一举吗？反向代理有什么作用？继续往下看，下面的负载均衡、虚拟主机等，都基于反向代理实现，当然反向代理的功能也不仅仅是这些。</p>
+<p>3、<strong>负载均衡</strong></p>
+<p>当网站访问量非常大，网站<a href="http://zz.2cto.com/">站长</a>开心赚钱的同时，也摊上事儿了。因为网站越来越慢，一台服务器已经不够用了。于是将同一个应用部署在多台服务器上，将大量用户的请求分配给多台机器处理。同时带来的好处是，其中一台服务器万一挂了，只要还有其他服务器正常运行，就不会影响用户使用。</p>
+<p>Nginx可以通过反向代理来实现负载均衡。</p>
+<p>配置 </p>
+<ol>
+<li><code>upstream myapp {</code></li>
+<li><code>server192.168.20.1:8080; # 应用服务器1</code></li>
+<li><code>server192.168.20.2:8080; # 应用服务器2</code></li>
+<li><code>}</code></li>
+<li><code>server {</code></li>
+<li><code>listen80;</code></li>
+<li><code>location / {</code></li>
+<li><code>proxy_pass http://myapp;</code></li>
+<li><code>}</code></li>
+<li><code>}</code></li>
+</ol>
+<p>以上配置会将请求轮询分配到应用服务器，也就是一个客户端的多次请求，有可能会由多台不同的服务器处理。可以通过ip-hash的方式，根据客户端ip地址的hash值将请求分配给固定的某一个服务器处理。</p>
+<p>配置：</p>
+<ol>
+<li><code>upstream myapp {</code></li>
+<li><code>ip_hash; # 根据客户端IP地址Hash值将请求分配给固定的一个服务器处理</code></li>
+<li><code>server192.168.20.1:8080;</code></li>
+<li><code>server192.168.20.2:8080;</code></li>
+<li><code>}</code></li>
+<li><code>server {</code></li>
+<li><code>listen80;</code></li>
+<li><code>location / {</code></li>
+<li><code>proxy_pass http://myapp;</code></li>
+<li><code>}</code></li>
+<li><code>}</code></li>
+</ol>
+<p>另外，服务器的硬件配置可能有好有差，想把大部分请求分配给好的服务器，把少量请求分配给差的服务器，可以通过weight来控制。 </p>
+<p>配置：</p>
+<ol>
+<li><code>upstream myapp {</code></li>
+<li><code>server192.168.20.1:8080weight=3; # 该服务器处理3/4请求</code></li>
+<li><code>server192.168.20.2:8080; # weight默认为1，该服务器处理1/4请求</code></li>
+<li><code>}</code></li>
+<li><code>server {</code></li>
+<li><code>listen80;</code></li>
+<li><code>location / {</code></li>
+<li><code>proxy_pass http://myapp;</code></li>
+<li><code>}</code></li>
+<li><code>}</code></li>
+</ol>
+<p>4、<strong>虚拟主机</strong></p>
+<p>有的网站访问量大，需要负载均衡。然而并不是所有网站都如此出色，有的网站，由于访问量太小，需要节省成本，将多个网站部署在同一台服务器上。</p>
+<p>例如将www.aaa.com和www.bbb.com两个网站部署在同一台服务器上，两个域名解析到同一个IP地址，但是用户通过两个域名却可以打开两个完全不同的网站，互相不影响，就像访问两个服务器一样，所以叫两个虚拟主机。</p>
+<p>配置：</p>
+<ol>
+<li><code>server {</code></li>
+<li><code>listen80default_server;</code></li>
+<li><code>server_name _;</code></li>
+<li><code>return444; # 过滤其他域名的请求，返回444状态码</code></li>
+<li><code>}</code></li>
+<li><code>server {</code></li>
+<li><code>listen80;</code></li>
+<li><code>server_name www.aaa.com; # www.aaa.com域名</code></li>
+<li><code>location / {</code></li>
+<li><code>proxy_pass http://localhost:8080; # 对应端口号8080</code></li>
+<li><code>}</code></li>
+<li><code>}</code></li>
+<li><code>server {</code></li>
+<li><code>listen80;</code></li>
+<li><code>server_name www.bbb.com; # www.bbb.com域名</code></li>
+<li><code>location / {</code></li>
+<li><code>proxy_pass http://localhost:8081; # 对应端口号8081</code></li>
+<li><code>}</code></li>
+<li><code>}</code></li>
+</ol>
+<p>在服务器8080和8081分别开了一个应用，客户端通过不同的域名访问，根据server_name可以反向代理到对应的应用服务器。</p>
+<p>虚拟主机的原理是通过HTTP请求头中的Host是否匹配server_name来实现的，有兴趣的同学可以研究一下HTTP协议。</p>
+<p>另外，server_name配置还可以过滤有人恶意将某些域名指向你的主机服务器。</p>
+<p>5、<strong>FastCGI</strong></p>
+<p>Nginx本身不支持<a href="http://www.2cto.com/kf/web/php/">PHP</a>等语言，但是它可以通过FastCGI来将请求扔给某些语言或框架处理（例如PHP、<a href="http://www.2cto.com/kf/web/Python/">Python</a>、Perl）。</p>
+<ol>
+<li><code>server {</code></li>
+<li><code>listen80;</code></li>
+<li><code>location ~ \.php$ {</code></li>
+<li><code>include fastcgi_params;</code></li>
+<li><code>fastcgi_param SCRIPT_FILENAME /PHP文件路径$fastcgi_script_name; # PHP文件路径</code></li>
+<li><code>fastcgi_pass127.0.0.1:9000; # PHP-FPM地址和端口号</code></li>
+<li><code># 另一种方式：fastcgi_pass unix:/var/run/php5-fpm.sock;</code></li>
+<li><code>}</code></li>
+<li><code>}</code></li>
+</ol>
+<p>配置中将.php结尾的请求通过FashCGI交给PHP-FPM处理，PHP-FPM是PHP的一个FastCGI管理器。</p></div>
+	<hr>
+	<h2>Comments</h2>
+</div>
+		</div>
+	</div> 	<!-- <hr> -->
+</div> <!-- /container -->
+<footer class="aw-footer bg-danger">
+	<div class="container"> <!-- footer -->
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1">
+				<div class="row">
+					<div class="col-md-3">
+						<h4>Navigation</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="">Timmyxu的技术博客</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Author</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="#">You can add links in your config file</a></li>
+							<li><a href="#">Another social link</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Categories</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="/category/技术.html">技术 (10)</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Links</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="http://getpelican.com/">Pelican</a></li>
+							<li><a href="http://python.org/">Python.org</a></li>
+							<li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+							<li><a href="#">You can modify those links in your config file</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 text-center center-block aw-bottom">
+			<p>&copy; Timmy 2016</p>
+			<p>Powered by Pelican</p>
+		</div>
+	</div>
+</div>
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+	$("div.collapseheader").click(function () {
+		$header = $(this).children("span").first();
+		$codearea = $(this).children(".input_area");
+		$codearea.slideToggle(500, function () {
+			$header.text(function () {
+				return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+			});
+		});
+	});
+});
+</script>
+</body>
+</html>

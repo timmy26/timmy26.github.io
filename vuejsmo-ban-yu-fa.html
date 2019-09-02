@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="chinese (simplified)">
+<head>
+	<meta charset="utf-8">
+	<title>Vue.js模板语法 — Timmyxu的技术博客</title>
+	<meta name="description" content="Title: Vue.js模板语法; Date: 2016-02-08; Author: Timmy">
+	<meta name="author" content="Timmy">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+		<script src="/theme/html5.js"></script>
+		<![endif]-->
+	<link href="/theme/css/ipython.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/simplex/bootstrap.min.css" rel="stylesheet">
+	<link href="/theme/css/local.css" rel="stylesheet">
+	<link href="/theme/css/pygments.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+	<div class="page-header">
+		<h1><a href="/">Timmyxu的技术博客</a>
+			<br>	</div>
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="text-center article-header">
+		<h1 itemprop="name headline" class="article-title">Vue.js模板语法</h1>
+		<span itemprop="author" itemscope itemtype="http://schema.org/Person">
+			<h4 itemprop="name">Timmy</h4>
+		</span>
+		<time datetime="2016-02-08T09:20:00+01:00" itemprop="datePublished">周一 08 二月 2016</time>
+	</div>
+	<div>
+		Category:
+		<span itemprop="articleSection">
+			<a href="/category/ji-zhu.html" rel="category">技术</a>
+		</span>
+	</div>
+ 
+	<div>
+		Tags:
+		<span itemprop="keywords">
+			<a href="/tag/pelican.html" rel="tag">pelican</a>
+		</span>
+		<span itemprop="keywords">
+			<a href="/tag/publishing.html" rel="tag">publishing</a>
+		</span>
+	</div>
+	<div itemprop="articleBody" class="article-body"><h2>Vue.js模板语法</h2>
+<p>模板语法指的是如何将数据放入html中，Vue.js使用了基于 HTML的模板语法，允许开发者声明式地将DOM绑定至底层 Vue 实例的数据。所有 Vue.js的模板都是合法的 HTML ，所以能被遵循规范的浏览器和 HTML 解析器解析。</p>
+<h4>插入值</h4>
+<p>数据绑定最常见的形式就是使用“Mustache”语法 (双大括号) 的文本插值：</p>
+<div class="highlight"><pre><span></span><span class="nt">&lt;span&gt;</span>Message: <span class="cp">{{</span> <span class="nv">msg</span> <span class="cp">}}</span><span class="nt">&lt;/span&gt;</span>
+</pre></div>
+
+
+<p>如果是标签的属性要使用值，就不能使用“Mustache”语法，需要写成使用v-bind指令：</p>
+<div class="highlight"><pre><span></span><span class="nt">&lt;a</span> <span class="na">v-bind:href=</span><span class="s">&quot;url&quot;</span> <span class="na">v-bind:title=</span><span class="s">&#39;tip&#39;</span><span class="nt">&gt;</span>百度网<span class="nt">&lt;/a&gt;</span>
+</pre></div>
+
+
+<p>插入的值当中还可以写表达式：</p>
+<div class="highlight"><pre><span></span><span class="cp">{{</span> <span class="nv">number</span> <span class="o">+</span> <span class="m">1</span> <span class="cp">}}</span>
+<span class="cp">{{</span> <span class="nv">ok</span> <span class="err">?</span> <span class="s1">&#39;YES&#39;</span> <span class="o">:</span> <span class="s1">&#39;NO&#39;</span> <span class="cp">}}</span>
+<span class="cp">{{</span> <span class="nv">message.split</span><span class="o">(</span><span class="s1">&#39;&#39;</span><span class="o">)</span><span class="nv">.reverse</span><span class="o">()</span><span class="nv">.join</span><span class="o">(</span><span class="s1">&#39;&#39;</span><span class="o">)</span> <span class="cp">}}</span>
+<span class="nt">&lt;a</span> <span class="na">v-bind:href=</span><span class="s">&quot;url&quot;</span><span class="nt">&gt;</span>链接文字<span class="nt">&lt;/a&gt;</span>
+</pre></div>
+
+
+<h4>指令</h4>
+<p>指令 (Directives) 是带有“v-”前缀的特殊属性。指令属性的值预期是单个JavaScript表达式，指令的职责是，当表达式的值改变时，将其产生的连带影响，响应式地作用于DOM。常见的指令有v-bind、v-if、v-on。</p>
+<div class="highlight"><pre><span></span><span class="o">&lt;!--</span> 根据<span class="nv">ok</span>的布尔值来插入<span class="o">/</span>移除 <span class="o">&lt;</span><span class="nv">p</span><span class="o">&gt;</span> 元素 <span class="o">--&gt;</span>
+<span class="o">&lt;</span><span class="nv">p</span> <span class="nv">v</span><span class="o">-</span><span class="k">if</span><span class="o">=</span><span class="s2">&quot;</span><span class="s">ok</span><span class="s2">&quot;</span><span class="o">&gt;</span>是否显示这一段<span class="o">&lt;/</span><span class="nv">p</span><span class="o">&gt;</span>
+
+<span class="o">&lt;!--</span> 监听按钮的<span class="nv">click</span>事件来执行<span class="nv">fnChangeMsg</span>方法 <span class="o">--&gt;</span>
+<span class="o">&lt;</span><span class="nv">button</span> <span class="nv">v</span><span class="o">-</span><span class="nv">on</span>:<span class="nv">click</span><span class="o">=</span><span class="s2">&quot;</span><span class="s">fnChangeMsg</span><span class="s2">&quot;</span><span class="o">&gt;</span>按钮<span class="o">&lt;/</span><span class="nv">button</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<h4>缩写</h4>
+<p>v-bind和v-on事件这两个指令会经常用，所以有简写方式：</p>
+<div class="highlight"><pre><span></span><span class="c">&lt;!-- 完整语法 --&gt;</span>
+<span class="nt">&lt;a</span> <span class="na">v-bind:href=</span><span class="s">&quot;url&quot;</span><span class="nt">&gt;</span>...<span class="nt">&lt;/a&gt;</span>
+
+<span class="c">&lt;!-- 缩写 --&gt;</span>
+<span class="nt">&lt;a</span> <span class="na">:href=</span><span class="s">&quot;url&quot;</span><span class="nt">&gt;</span>...<span class="nt">&lt;/a&gt;</span>
+
+
+<span class="c">&lt;!-- 完整语法 --&gt;</span>
+<span class="nt">&lt;button</span> <span class="na">v-on:click=</span><span class="s">&quot;fnChangeMsg&quot;</span><span class="nt">&gt;</span>按钮<span class="nt">&lt;/button&gt;</span>
+
+<span class="c">&lt;!-- 缩写 --&gt;</span>
+<span class="nt">&lt;button</span> <span class="err">@</span><span class="na">click=</span><span class="s">&quot;fnChangeMsg&quot;</span><span class="nt">&gt;</span>按钮<span class="nt">&lt;/button&gt;</span>
+</pre></div></div>
+	<hr>
+	<h2>Comments</h2>
+</div>
+		</div>
+	</div> 	<!-- <hr> -->
+</div> <!-- /container -->
+<footer class="aw-footer bg-danger">
+	<div class="container"> <!-- footer -->
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1">
+				<div class="row">
+					<div class="col-md-3">
+						<h4>Navigation</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="">Timmyxu的技术博客</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Author</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="#">You can add links in your config file</a></li>
+							<li><a href="#">Another social link</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Categories</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="/category/技术.html">技术 (10)</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Links</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="http://getpelican.com/">Pelican</a></li>
+							<li><a href="http://python.org/">Python.org</a></li>
+							<li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+							<li><a href="#">You can modify those links in your config file</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 text-center center-block aw-bottom">
+			<p>&copy; Timmy 2016</p>
+			<p>Powered by Pelican</p>
+		</div>
+	</div>
+</div>
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+	$("div.collapseheader").click(function () {
+		$header = $(this).children("span").first();
+		$codearea = $(this).children(".input_area");
+		$codearea.slideToggle(500, function () {
+			$header.text(function () {
+				return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+			});
+		});
+	});
+});
+</script>
+</body>
+</html>

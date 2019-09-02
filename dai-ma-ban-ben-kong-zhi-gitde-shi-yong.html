@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="chinese (simplified)">
+<head>
+	<meta charset="utf-8">
+	<title>代码版本控制：git的使用 — Timmyxu的技术博客</title>
+	<meta name="description" content="Title: 代码版本控制：git的使用; Date: 2016-02-26; Author: Timmy">
+	<meta name="author" content="Timmy">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+		<script src="/theme/html5.js"></script>
+		<![endif]-->
+	<link href="/theme/css/ipython.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/simplex/bootstrap.min.css" rel="stylesheet">
+	<link href="/theme/css/local.css" rel="stylesheet">
+	<link href="/theme/css/pygments.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+	<div class="page-header">
+		<h1><a href="/">Timmyxu的技术博客</a>
+			<br>	</div>
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="text-center article-header">
+		<h1 itemprop="name headline" class="article-title">代码版本控制：git的使用</h1>
+		<span itemprop="author" itemscope itemtype="http://schema.org/Person">
+			<h4 itemprop="name">Timmy</h4>
+		</span>
+		<time datetime="2016-02-26T14:26:00+01:00" itemprop="datePublished">周五 26 二月 2016</time>
+	</div>
+	<div>
+		Category:
+		<span itemprop="articleSection">
+			<a href="/category/ji-zhu.html" rel="category">技术</a>
+		</span>
+	</div>
+ 
+	<div>
+		Tags:
+		<span itemprop="keywords">
+			<a href="/tag/pelican.html" rel="tag">pelican</a>
+		</span>
+		<span itemprop="keywords">
+			<a href="/tag/publishing.html" rel="tag">publishing</a>
+		</span>
+	</div>
+	<div itemprop="articleBody" class="article-body"><p>1.https://github.com/ 注册账号
+2.  点击 Start a project
+3.  图</p>
+<ol>
+<li>图</li>
+</ol>
+<p>5.Clone or download
+6.安装git</p>
+<ol>
+<li>cd 到创建项目的目录</li>
+<li>8.git clone https://github.com/zhangxiaochuZXC/test007.git
+   9.创建test.py文件
+   10.</li>
+</ol>
+<p>git config user.name 'wsw'
+git config user.email '邮箱'
+ Git add .
+Git commit -am ‘project’(添加注释)
+14.推送文件</p>
+<p>Git push 
+15.长期存储密码</p>
+<p>git config --global credential.helper store</p>
+<p>16.下载文件</p>
+<p>git pull
+17.解决冲突</p>
+<p>git stash
+git pull origin master
+git stash pop
+清除自己写的内容
+git reset FETCH_HEAD
+18．标签
+git tag -a 标签名 -m ‘标签描述’
+例：</p>
+<p>git tag -a v1.0 -m 'version 1.0'
+ git push origin v1.0
+19.分支
+查看当前分支</p>
+<p>git branch
+创建并切换到dev分支</p>
+<p>git checkout -b dev
+设置本地分支跟踪远程指定分支（将分支推送到远程）</p>
+<p>git push -u origin dev
+在dev下修改代码并提交
+查看变化
+合并分支
+7.1 先切换到master分支</p>
+<p>git checkout master
+7.2 dev分支合并到master分支</p>
+<p>git merge dev
+合并分支默认在本地完成，合并后直接推送即可</p>
+<p>git push</p></div>
+	<hr>
+	<h2>Comments</h2>
+</div>
+		</div>
+	</div> 	<!-- <hr> -->
+</div> <!-- /container -->
+<footer class="aw-footer bg-danger">
+	<div class="container"> <!-- footer -->
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1">
+				<div class="row">
+					<div class="col-md-3">
+						<h4>Navigation</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="">Timmyxu的技术博客</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Author</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="#">You can add links in your config file</a></li>
+							<li><a href="#">Another social link</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Categories</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="/category/技术.html">技术 (10)</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Links</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="http://getpelican.com/">Pelican</a></li>
+							<li><a href="http://python.org/">Python.org</a></li>
+							<li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+							<li><a href="#">You can modify those links in your config file</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 text-center center-block aw-bottom">
+			<p>&copy; Timmy 2016</p>
+			<p>Powered by Pelican</p>
+		</div>
+	</div>
+</div>
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+	$("div.collapseheader").click(function () {
+		$header = $(this).children("span").first();
+		$codearea = $(this).children(".input_area");
+		$codearea.slideToggle(500, function () {
+			$header.text(function () {
+				return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+			});
+		});
+	});
+});
+</script>
+</body>
+</html>

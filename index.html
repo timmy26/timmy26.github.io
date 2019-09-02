@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="chinese (simplified)">
+<head>
+	<meta charset="utf-8">
+	<title>Timmyxu的技术博客</title>
+	<meta name="description" content="Coding, scientific development, finance, data analysis, visualization, statistics, and machine learning">
+	<meta name="author" content="Timmy">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+		<script src="/theme/html5.js"></script>
+		<![endif]-->
+	<link href="/theme/css/ipython.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/simplex/bootstrap.min.css" rel="stylesheet">
+	<link href="/theme/css/local.css" rel="stylesheet">
+	<link href="/theme/css/pygments.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+	<div class="page-header">
+		<h1><a href="/">Timmyxu的技术博客</a>
+			<br>	</div>
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+        
+        
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<a href="/vuejs-zu-jian-qian-tao.html">
+		<h2 itemprop="name headline">vue.js 组件嵌套</h2>
+	</a>
+	<time datetime="2016-07-08T10:20:00+02:00" itemprop="datePublished">周五 08 七月 2016</time>
+	&nbsp;—&nbsp;
+	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+		<span itemprop="name">Timmy</span>
+	</span>
+	<div class="summary"><h2>组件嵌套</h2>
+<p>将单文件组件组合在一起有两种方式，一种是嵌套方式，一种用路由的方式。嵌套的方式代码如下：</p>
+<p>下图示中，假设组件A中要嵌入组件B</p>
+<div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">template</span><span class="o">&gt;</span>
+
+    <span class="o">//</span> <span class="err">在</span><span class="n">A组件中使用B组件</span>
+    <span class="o">&lt;</span><span class="n">B_zujian</span><span class="o">&gt;&lt;/</span><span class="n">B_zujian</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">template</span><span class="o">&gt;</span>
+
+
+<span class="o">&lt;</span><span class="n">script</span><span class="o">&gt;</span>
+<span class="o">//</span> <span class="err">先导入</span><span class="n">B组件</span><span class="err">，其中</span><span class="s1">&#39;@&#39;</span><span class="err">表示</span><span class="n">src目录</span><span class="err">，组件后的</span><span class="n">vue扩展名可以省略</span>
+<span class="kn">import</span> <span class="nn">B_zujian</span> <span class="nn">from</span> <span class="s1">&#39;@/components/B_zjian&#39;</span>
+
+<span class="n">export</span> <span class="n">default</span><span class="p">{</span>
+    <span class="n">name</span><span class="p">:</span><span class="s1">&#39;A_zujian&#39;</span><span class="p">,</span>
+    <span class="n">data</span><span class="p">:</span><span class="n">function</span><span class="p">(){</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="n">iNum</span><span class="p">:</span><span class="mi">0</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="o">//</span> <span class="err">接着在</span><span class="n">components属性选项中注册</span>
+    <span class="n">components</span><span class="p">:{</span>
+        <span class="n">B_zujian</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+
+<span class="o">&lt;/</span><span class="n">script</span><span class="o">&gt;</span>
+</pre></div></div>
+	Category:
+	<span itemprop="articleSection">
+		<a href="/category/ji-zhu.html" rel="category">技术</a>
+	</span>
+	Tags:
+ 
+	<span itemprop="keywords">
+		<a href="/tag/pelican.html" rel="tag">pelican</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/publishing.html" rel="tag">publishing</a>
+	</span>
+</div>
+<hr>
+        
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<a href="/shu-ju-qing-qiu-ji-kua-yu.html">
+		<h2 itemprop="name headline">数据请求及跨域</h2>
+	</a>
+	<time datetime="2016-03-06T08:30:00+01:00" itemprop="datePublished">周日 06 三月 2016</time>
+	&nbsp;—&nbsp;
+	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+		<span itemprop="name">Timmy</span>
+	</span>
+	<div class="summary"><h2>数据请求及跨域</h2>
+<h4>数据请求</h4>
+<p>数据请求使用的是ajax，在vue中使用的axios.js，这个文件可以在index.html文件中引入，也可以作为模块导入，在main.js中导入这个模块，然后将它绑定在Vue类的原型上。</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">axios</span> <span class="nn">from</span> <span class="s1">&#39;axios&#39;</span>
+<span class="n">Vue</span><span class="o">.</span><span class="n">prototype</span><span class="o">.</span><span class="n">axios</span> <span class="o">=</span> <span class="n">axios</span>
+</pre></div>
+
+
+<p>在组件的js代码中使用axios：</p>
+<div class="highlight"><pre><span></span><span class="n">this</span><span class="p">.</span><span class="n">axios</span><span class="p">(</span><span class="err">{</span><span class="p">......</span><span class="err">}</span><span class="p">)</span>
+</pre></div>
+
+
+<h4>跨域请求</h4>
+<p>vue的自动化工具提供了开发的服务器，我们在这个服务器环境下开发，改动代码可以马上更新显示，错误了还有代码提示，非常方便，但是，如果我们组件中需要数据，而且数据在另一个服务器环境下运行，我们就需要跨域请求数据，vue工具中可以使用代理来跨域请求，设置的方法是：在项目的config文件夹中，打开index.js,在proxyTable一项中设置：</p>
+<div class="highlight"><pre><span></span><span class="o">//</span> <span class="s1">&#39;http://localhost:7890&#39;</span> <span class="err">表示的是要跨域请求的地址</span>
+<span class="o">//</span> <span class="err">如果请求的地址是：</span><span class="s1">&#39;http://localhost:7890/index_data&#39;</span>
+<span class="o">//</span> <span class="err">在请求时就可以写成</span><span class="p">:</span> <span class="s1">&#39;/apis/index_data …</span></pre></div></div>
+	Category:
+	<span itemprop="articleSection">
+		<a href="/category/ji-zhu.html" rel="category">技术</a>
+	</span>
+	Tags:
+ 
+	<span itemprop="keywords">
+		<a href="/tag/pelican.html" rel="tag">pelican</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/publishing.html" rel="tag">publishing</a>
+	</span>
+</div>
+<hr>
+        
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<a href="/tong-bu-yi-bu-zu-sai-fei-zu-sai.html">
+		<h2 itemprop="name headline">同步、异步、阻塞、非阻塞</h2>
+	</a>
+	<time datetime="2016-03-02T11:10:00+01:00" itemprop="datePublished">周三 02 三月 2016</time>
+	&nbsp;—&nbsp;
+	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+		<span itemprop="name">Timmy</span>
+	</span>
+	<div class="summary"><h1>阻塞</h1>
+<p>​         </p>
+<div class="highlight"><pre><span></span> <span class="err">阻塞调用是指调用结果返回之前，当前线程会被挂起。函数只有在得到结果之后才会返回。有人也许会把阻塞调用和同步调用等同起来，实际上它们是不同的。对于同步调用来说，很多时候当前线程还是激活的，只是从逻辑上当前函数没有返回而已。例如，我们在</span><span class="n">CSocket中调用Receive函数</span><span class="err">，如果缓冲区中没有数据，这个函数就会一直等待，直到有数据才返回。而此时，当前线程还会继续处理各种各样的消息。如果主窗口和调用函数在同一个线程中，除非你在特殊的界面操作函数中调用，其实主界面还是应该可以刷新。</span><span class="n">socket接收数据的另外一个函数recv则是一个阻塞调用的例子</span><span class="err">。当</span><span class="n">socket工作在阻塞模式的时候</span><span class="err">，</span> <span class="err">如果没有数据的情况下调用该函数，则当前线程就会被挂起，直到有数据为止</span>
+</pre></div>
+
+
+<h1>非阻塞</h1>
+<div class="highlight"><pre><span></span>   <span class="err">非阻塞和阻塞的概念相对应，指在不能立刻得到结果之前，该函数不会阻塞当前线程，而会立刻返回。</span>
+</pre></div>
+
+
+<h1>对象的阻塞模式和阻塞函数调用</h1>
+<div class="highlight"><pre><span></span> <span class="err">对象是否处于阻塞模式和函数是不是阻塞调用有很强的相关性，但是并不是一一对应的。阻塞对象上可以有非阻塞的调用方式，我们可以通过一定的</span><span class="n">API去轮询状态</span><span class="err">，在适当的时候调用阻塞函数，就可以避免阻塞。而对于非阻塞对象，调用特殊的函数也可以进入阻塞调用。函数</span><span class="n">select就是这样的一个例子</span>
+</pre></div>
+
+
+<h2>同步、异步、阻塞、非阻塞：</h2>
+<p><strong>同步：执行一个操作后，等待结果 …</strong></p></div>
+	Category:
+	<span itemprop="articleSection">
+		<a href="/category/ji-zhu.html" rel="category">技术</a>
+	</span>
+	Tags:
+ 
+	<span itemprop="keywords">
+		<a href="/tag/pelican.html" rel="tag">pelican</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/publishing.html" rel="tag">publishing</a>
+	</span>
+</div>
+<hr>
+        
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<a href="/dai-ma-ban-ben-kong-zhi-gitde-shi-yong.html">
+		<h2 itemprop="name headline">代码版本控制：git的使用</h2>
+	</a>
+	<time datetime="2016-02-26T14:26:00+01:00" itemprop="datePublished">周五 26 二月 2016</time>
+	&nbsp;—&nbsp;
+	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+		<span itemprop="name">Timmy</span>
+	</span>
+	<div class="summary"><p>1.https://github.com/ 注册账号
+2.  点击 Start a project
+3.  图</p>
+<ol>
+<li>图</li>
+</ol>
+<p>5.Clone or download
+6.安装git</p>
+<ol>
+<li>cd 到创建项目的目录</li>
+<li>8.git clone https://github.com/zhangxiaochuZXC/test007.git
+   9.创建test.py文件
+   10.</li>
+</ol>
+<p>git config user.name 'wsw'
+git config user.email '邮箱'
+ Git add .
+Git commit -am ‘project …</p></div>
+	Category:
+	<span itemprop="articleSection">
+		<a href="/category/ji-zhu.html" rel="category">技术</a>
+	</span>
+	Tags:
+ 
+	<span itemprop="keywords">
+		<a href="/tag/pelican.html" rel="tag">pelican</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/publishing.html" rel="tag">publishing</a>
+	</span>
+</div>
+<hr>
+        
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<a href="/vuejsmo-ban-yu-fa.html">
+		<h2 itemprop="name headline">Vue.js模板语法</h2>
+	</a>
+	<time datetime="2016-02-08T09:20:00+01:00" itemprop="datePublished">周一 08 二月 2016</time>
+	&nbsp;—&nbsp;
+	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+		<span itemprop="name">Timmy</span>
+	</span>
+	<div class="summary"><h2>Vue.js模板语法</h2>
+<p>模板语法指的是如何将数据放入html中，Vue.js使用了基于 HTML的模板语法，允许开发者声明式地将DOM绑定至底层 Vue 实例的数据。所有 Vue.js的模板都是合法的 HTML ，所以能被遵循规范的浏览器和 HTML 解析器解析。</p>
+<h4>插入值</h4>
+<p>数据绑定最常见的形式就是使用“Mustache”语法 (双大括号) 的文本插值：</p>
+<div class="highlight"><pre><span></span><span class="nt">&lt;span&gt;</span>Message: <span class="cp">{{</span> <span class="nv">msg</span> <span class="cp">}}</span><span class="nt">&lt;/span&gt;</span>
+</pre></div>
+
+
+<p>如果是标签的属性要使用值，就不能使用“Mustache”语法，需要写成使用v-bind指令：</p>
+<div class="highlight"><pre><span></span><span class="nt">&lt;a</span> <span class="na">v-bind:href=</span><span class="s">&quot;url&quot;</span> <span class="na">v-bind:title=</span><span class="s">&#39;tip&#39;</span><span class="nt">&gt;</span>百度网<span class="nt">&lt;/a&gt;</span>
+</pre></div>
+
+
+<p>插入的值当中还可以写表达式：</p>
+<div class="highlight"><pre><span></span><span class="cp">{{</span> <span class="nv">number</span> <span class="o">+</span> <span class="m">1</span> <span class="cp">}}</span>
+<span class="cp">{{</span> <span class="nv">ok</span> <span class="err">?</span> <span class="s1">&#39;YES&#39;</span> <span class="o">:</span> <span class="s1">&#39;NO&#39;</span> <span class="cp">}}</span>
+<span class="cp">{{</span> <span class="nv">message.split</span><span class="o">(</span><span class="s1">&#39;&#39;</span><span class="o">)</span><span class="nv">.reverse</span><span class="o">()</span><span class="nv">.join …</span></pre></div></div>
+	Category:
+	<span itemprop="articleSection">
+		<a href="/category/ji-zhu.html" rel="category">技术</a>
+	</span>
+	Tags:
+ 
+	<span itemprop="keywords">
+		<a href="/tag/pelican.html" rel="tag">pelican</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/publishing.html" rel="tag">publishing</a>
+	</span>
+</div>
+<hr>
+        
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<a href="/xiang-dui-di-zhi-yu-jue-dui-di-zhi.html">
+		<h2 itemprop="name headline">相对地址与绝对地址</h2>
+	</a>
+	<time datetime="2015-12-10T10:20:00+01:00" itemprop="datePublished">周四 10 十二月 2015</time>
+	&nbsp;—&nbsp;
+	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+		<span itemprop="name">Timmy</span>
+	</span>
+	<div class="summary"><h2>相对地址与绝对地址</h2>
+<p>网页上引入或链接到外部文件，需要定义文件的地址，常见引入或链接外部文件包括以下几种：</p>
+<div class="highlight"><pre><span></span><span class="c">&lt;!-- 引入外部图片   --&gt;</span>
+<span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">&quot;images/001.jpg&quot;</span> <span class="na">alt=</span><span class="s">&quot;图片&quot;</span> <span class="nt">/&gt;</span>
+
+<span class="c">&lt;!-- 链接到另外一个网页   --&gt;</span>
+<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;002.html&quot;</span><span class="nt">&gt;</span>链接到网页2<span class="nt">&lt;/a&gt;</span>
+
+<span class="c">&lt;!-- 外链一个css文件   --&gt;</span>
+<span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="na">href=</span><span class="s">&quot;css/main.css&quot;</span> <span class="nt">/&gt;</span>
+
+<span class="c">&lt;!-- 外链一个js文件   --&gt;</span>
+<span class="nt">&lt;script</span> <span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;js/jquery.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</pre></div>
+
+
+<p>这些地址分为相对地址和绝对地址:</p>
+<p><strong>相对地址</strong> 
+相对于引用文件本身去定位被引用的文件地址，以上的例子都是相对地址，相对地址的定义技巧：</p>
+<ul>
+<li>“ ./ ” 表示当前文件所在目录下，比如：“./pic.jpg” 表示当前目录下的pic …</li></ul></div>
+	Category:
+	<span itemprop="articleSection">
+		<a href="/category/ji-zhu.html" rel="category">技术</a>
+	</span>
+	Tags:
+ 
+	<span itemprop="keywords">
+		<a href="/tag/pelican.html" rel="tag">pelican</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/publishing.html" rel="tag">publishing</a>
+	</span>
+</div>
+<hr>
+        
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<a href="/vuejs-guo-lu-qi.html">
+		<h2 itemprop="name headline">Vue.js 过滤器</h2>
+	</a>
+	<time datetime="2015-10-20T10:20:00+02:00" itemprop="datePublished">周二 20 十月 2015</time>
+	&nbsp;—&nbsp;
+	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+		<span itemprop="name">Timmy</span>
+	</span>
+	<div class="summary"><h2>过滤器</h2>
+<p>Vue.js允许你自定义过滤器，可被用于一些常见的文本格式化。过滤器可以用在两个地方：双花括号插值和 v-bind 表达式</p>
+<div class="highlight"><pre><span></span><span class="c">&lt;!-- 在双花括号中 --&gt;</span>
+<span class="cp">{{</span> <span class="nv">prize</span> <span class="o">|</span> <span class="nf">RMB</span> <span class="cp">}}</span>
+
+<span class="c">&lt;!-- 在v-bind中 --&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">v-bind:id=</span><span class="s">&quot;rawId | formatId&quot;</span><span class="nt">&gt;&lt;/div&gt;</span>
+</pre></div>
+
+
+<p>过滤器实际上是一个函数，可以在一个组件的选项中定义组件内部过滤器：</p>
+<div class="highlight"><pre><span></span><span class="nv">filters</span>:{
+  <span class="nv">RMB</span>:<span class="nv">function</span><span class="ss">(</span><span class="nv">value</span><span class="ss">)</span>{
+    <span class="k">if</span><span class="ss">(</span><span class="nv">value</span><span class="o">==</span><span class="s1">&#39;&#39;</span><span class="ss">)</span>
+    {
+      <span class="k">return</span><span class="c1">;</span>
+    }
+    <span class="k">return</span> <span class="s1">&#39;</span><span class="s">¥ </span><span class="s1">&#39;</span><span class="o">+</span><span class="nv">value</span><span class="c1">;</span>
+  }
+}
+</pre></div>
+
+
+<p>或者在创建 Vue 实例之前全局定义过滤器：</p>
+<div class="highlight"><pre><span></span><span class="nv">Vue</span>.<span class="nv">filter</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">Yuan</span><span class="s1">&#39;</span>,<span class="nv">function</span><span class="ss">(</span><span class="nv">value</span><span class="ss">)</span>{
+  <span class="k">if</span><span class="ss">(</span><span class="nv">value</span><span class="o">==</span><span class="s1">&#39;&#39;</span><span class="ss">)</span>
+  {
+    <span class="k">return</span><span class="c1">;</span>
+  }
+  <span class="k">return</span> <span class="nv">value</span><span class="o">+</span><span class="s1">&#39;</span><span class="s">元</span><span class="s1">&#39;</span><span class="c1">;</span>
+}<span class="ss">)</span><span class="c1">;</span>
+</pre></div>
+
+
+<p>此时过滤器'RMB'只能在定义它的对象接管标签内使用，而'Yuan'可以全局使用</p></div>
+	Category:
+	<span itemprop="articleSection">
+		<a href="/category/ji-zhu.html" rel="category">技术</a>
+	</span>
+	Tags:
+ 
+	<span itemprop="keywords">
+		<a href="/tag/pelican.html" rel="tag">pelican</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/publishing.html" rel="tag">publishing</a>
+	</span>
+</div>
+<hr>
+        
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<a href="/nginxzhu-yao-yong-lai-gan-shi-yao.html">
+		<h2 itemprop="name headline">Nginx主要用来干什么</h2>
+	</a>
+	<time datetime="2015-10-08T10:20:00+02:00" itemprop="datePublished">周四 08 十月 2015</time>
+	&nbsp;—&nbsp;
+	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+		<span itemprop="name">Timmy</span>
+	</span>
+	<div class="summary"><p>1、<strong>静态HTTP服务器</strong></p>
+<p>首先，Nginx是一个HTTP服务器，可以将服务器上的静态文件（如HTML、图片）通过HTTP协议展现给客户端。</p>
+<p>配置：</p>
+<ol>
+<li><code>server {</code></li>
+<li><code>listen80; # 端口号</code></li>
+<li><code>location / {</code></li>
+<li><code>root /usr/share/nginx/html; # 静态文件路径</code></li>
+<li><code>}</code></li>
+<li><code>}</code></li>
+</ol>
+<p>2、<strong>反向代理服务器</strong></p>
+<p>什么是反向代理？</p>
+<p>客户端本来可以直接通过HTTP协议访问某网站应用服务器，网站管理员可以在中间加上一个Nginx，客户端请求Nginx，Nginx请求应用服务器，然后将结果返回给客户端，此时Nginx就是反向代理服务器。</p>
+<p>配置：</p>
+<ol>
+<li><code>server {</code></li>
+<li><code>listen80;</code></li>
+<li><code>location / {</code></li>
+<li><code>proxy_pass http://192.168.20.1:8080; # 应用服务器HTTP地址</code></li>
+<li><code>}</code></li>
+<li><code>}</code></li>
+</ol>
+<p>既然服务器可以直接HTTP访问，为什么要在中间加上一个反向代理，不是多此一举吗？反向代理有什么作用？继续往下看，下面的负载均衡、虚拟主机等，都基于反向代理实现，当然反向代理的功能也不仅仅是这些。</p>
+<p>3 …</p></div>
+	Category:
+	<span itemprop="articleSection">
+		<a href="/category/ji-zhu.html" rel="category">技术</a>
+	</span>
+	Tags:
+ 
+	<span itemprop="keywords">
+		<a href="/tag/pelican.html" rel="tag">pelican</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/publishing.html" rel="tag">publishing</a>
+	</span>
+</div>
+<hr>
+        
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<a href="/vuejs-shu-ju-jiao-hu.html">
+		<h2 itemprop="name headline">Vue.js 数据交互</h2>
+	</a>
+	<time datetime="2015-09-20T09:20:00+02:00" itemprop="datePublished">周日 20 九月 2015</time>
+	&nbsp;—&nbsp;
+	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+		<span itemprop="name">Timmy</span>
+	</span>
+	<div class="summary"><h2>数据交互</h2>
+<p>vue.js没有集成ajax功能，要使用ajax功能，可以使用vue官方推荐的axios.js库来做ajax的交互。 axios库的下载地址：<a href="https://github.com/axios/axios/releases">https://github.com/axios/axios/releases</a></p>
+<h4>axios完整写法：</h4>
+<div class="highlight"><pre><span></span><span class="n">axios</span><span class="p">(</span><span class="err">{</span>
+  <span class="k">method</span><span class="p">:</span> <span class="s1">&#39;post&#39;</span><span class="p">,</span>
+  <span class="n">url</span><span class="p">:</span> <span class="s1">&#39;/user/12345&#39;</span><span class="p">,</span>
+  <span class="k">data</span><span class="p">:</span> <span class="err">{</span>
+    <span class="n">firstName</span><span class="p">:</span> <span class="s1">&#39;Fred&#39;</span><span class="p">,</span>
+    <span class="n">lastName</span><span class="p">:</span> <span class="s1">&#39;Flintstone&#39;</span>
+  <span class="err">}</span>
+<span class="err">}</span><span class="p">);</span>
+</pre></div>
+
+
+<p>axios请求的写法也写成get方式后post方式。</p>
+<h4>执行get请求</h4>
+<div class="highlight"><pre><span></span><span class="o">//</span> 为给定 <span class="nv">ID</span> 的 <span class="nv">user</span> 创建请求
+<span class="o">//</span> <span class="nv">then</span>是请求成功时的响应，<span class="nv">catch</span>是请求失败时的响应
+
+<span class="nv">axios</span>.<span class="nv">get</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">/user?ID=12345</span><span class="s1">&#39;</span><span class="ss">)</span>
+.<span class="k">then</span><span class="ss">(</span><span class="nv">function</span> <span class="ss">(</span><span class="nv">response</span><span class="ss">)</span> {
+  <span class="nv">console</span>.<span class="nv">log</span><span class="ss">(</span><span class="nv">response</span><span class="ss">)</span><span class="c1">;</span>
+}<span class="ss">)</span>
+.<span class="nv">catch</span><span class="ss">(</span><span class="nv">function</span> <span class="ss">(</span><span class="nv">error …</span></pre></div></div>
+	Category:
+	<span itemprop="articleSection">
+		<a href="/category/ji-zhu.html" rel="category">技术</a>
+	</span>
+	Tags:
+ 
+	<span itemprop="keywords">
+		<a href="/tag/pelican.html" rel="tag">pelican</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/publishing.html" rel="tag">publishing</a>
+	</span>
+</div>
+<hr>
+        
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<a href="/my-super-post.html">
+		<h2 itemprop="name headline">Timmy的技术博客</h2>
+	</a>
+	<time datetime="2015-08-08T08:30:00+02:00" itemprop="datePublished">周六 08 八月 2015</time>
+	&nbsp;—&nbsp;
+	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+		<span itemprop="name">Timmy</span>
+	</span>
+	<div class="summary"><p>你好！python。</p></div>
+	Category:
+	<span itemprop="articleSection">
+		<a href="/category/ji-zhu.html" rel="category">技术</a>
+	</span>
+	Tags:
+ 
+	<span itemprop="keywords">
+		<a href="/tag/pelican.html" rel="tag">pelican</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/publishing.html" rel="tag">publishing</a>
+	</span>
+</div>
+<hr>
+ <div class="pagination">
+<ul>
+    <li class="prev disabled"><a href="#">&larr; Previous</a></li>
+
+    <li class="active"><a href="/index.html">1</a></li>
+
+    <li class="next disabled"><a href="#">&rarr; Next</a></li>
+
+</ul>
+</div> 		</div>
+	</div> 	<!-- <hr> -->
+</div> <!-- /container -->
+<footer class="aw-footer bg-danger">
+	<div class="container"> <!-- footer -->
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1">
+				<div class="row">
+					<div class="col-md-3">
+						<h4>Navigation</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="">Timmyxu的技术博客</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Author</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="#">You can add links in your config file</a></li>
+							<li><a href="#">Another social link</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Categories</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="/category/技术.html">技术 (10)</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Links</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="http://getpelican.com/">Pelican</a></li>
+							<li><a href="http://python.org/">Python.org</a></li>
+							<li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+							<li><a href="#">You can modify those links in your config file</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 text-center center-block aw-bottom">
+			<p>&copy; Timmy 2016</p>
+			<p>Powered by Pelican</p>
+		</div>
+	</div>
+</div>
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+	$("div.collapseheader").click(function () {
+		$header = $(this).children("span").first();
+		$codearea = $(this).children(".input_area");
+		$codearea.slideToggle(500, function () {
+			$header.text(function () {
+				return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+			});
+		});
+	});
+});
+</script>
+</body>
+</html>

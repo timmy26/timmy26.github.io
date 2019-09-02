@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="chinese (simplified)">
+<head>
+	<meta charset="utf-8">
+	<title>同步、异步、阻塞、非阻塞 — Timmyxu的技术博客</title>
+	<meta name="description" content="Title: 同步、异步、阻塞、非阻塞; Date: 2016-03-02; Author: Timmy">
+	<meta name="author" content="Timmy">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+		<script src="/theme/html5.js"></script>
+		<![endif]-->
+	<link href="/theme/css/ipython.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/simplex/bootstrap.min.css" rel="stylesheet">
+	<link href="/theme/css/local.css" rel="stylesheet">
+	<link href="/theme/css/pygments.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+	<div class="page-header">
+		<h1><a href="/">Timmyxu的技术博客</a>
+			<br>	</div>
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="text-center article-header">
+		<h1 itemprop="name headline" class="article-title">同步、异步、阻塞、非阻塞</h1>
+		<span itemprop="author" itemscope itemtype="http://schema.org/Person">
+			<h4 itemprop="name">Timmy</h4>
+		</span>
+		<time datetime="2016-03-02T11:10:00+01:00" itemprop="datePublished">周三 02 三月 2016</time>
+	</div>
+	<div>
+		Category:
+		<span itemprop="articleSection">
+			<a href="/category/ji-zhu.html" rel="category">技术</a>
+		</span>
+	</div>
+ 
+	<div>
+		Tags:
+		<span itemprop="keywords">
+			<a href="/tag/pelican.html" rel="tag">pelican</a>
+		</span>
+		<span itemprop="keywords">
+			<a href="/tag/publishing.html" rel="tag">publishing</a>
+		</span>
+	</div>
+	<div itemprop="articleBody" class="article-body"><h1>阻塞</h1>
+<p>​         </p>
+<div class="highlight"><pre><span></span> <span class="err">阻塞调用是指调用结果返回之前，当前线程会被挂起。函数只有在得到结果之后才会返回。有人也许会把阻塞调用和同步调用等同起来，实际上它们是不同的。对于同步调用来说，很多时候当前线程还是激活的，只是从逻辑上当前函数没有返回而已。例如，我们在</span><span class="n">CSocket中调用Receive函数</span><span class="err">，如果缓冲区中没有数据，这个函数就会一直等待，直到有数据才返回。而此时，当前线程还会继续处理各种各样的消息。如果主窗口和调用函数在同一个线程中，除非你在特殊的界面操作函数中调用，其实主界面还是应该可以刷新。</span><span class="n">socket接收数据的另外一个函数recv则是一个阻塞调用的例子</span><span class="err">。当</span><span class="n">socket工作在阻塞模式的时候</span><span class="err">，</span> <span class="err">如果没有数据的情况下调用该函数，则当前线程就会被挂起，直到有数据为止</span>
+</pre></div>
+
+
+<h1>非阻塞</h1>
+<div class="highlight"><pre><span></span>   <span class="err">非阻塞和阻塞的概念相对应，指在不能立刻得到结果之前，该函数不会阻塞当前线程，而会立刻返回。</span>
+</pre></div>
+
+
+<h1>对象的阻塞模式和阻塞函数调用</h1>
+<div class="highlight"><pre><span></span> <span class="err">对象是否处于阻塞模式和函数是不是阻塞调用有很强的相关性，但是并不是一一对应的。阻塞对象上可以有非阻塞的调用方式，我们可以通过一定的</span><span class="n">API去轮询状态</span><span class="err">，在适当的时候调用阻塞函数，就可以避免阻塞。而对于非阻塞对象，调用特殊的函数也可以进入阻塞调用。函数</span><span class="n">select就是这样的一个例子</span>
+</pre></div>
+
+
+<h2>同步、异步、阻塞、非阻塞：</h2>
+<p><strong>同步：执行一个操作后，等待结果，然后才继续执行后续的操作。</strong></p>
+<p><strong>异步：执行一个操作后，可以去执行其他的操作，然后等待通知再回来执行刚才没执行完的操作。</strong> </p>
+<p><strong>阻塞： 进程给CPU传达一个任务后，一直等待CPU处理完成，然后才执行后面的操作。</strong> </p>
+<p><strong>非阻塞：进程给CPU传达任务后，继续处理后续的操作，隔断时间再来询问之前的操作是否完成。（这样的过程也叫轮询）</strong>  </p>
+<p><strong>阻塞，非阻塞： 阻塞和非阻塞关注的是程序在等待调用结果（消息或返回值）时的状态，对应用程序来说更关注的是单个进程的执行状态  （进程/线程要访问的数据是否就绪，进程/线程是否需要等待）</strong>  </p>
+<p><strong>同步，异步： 同步和异步关注的是消息通信机制，访问数据的方式，对应用程序来说，关注的是程序中间的协作关系  （同步需要主动读写数据，在读写数据的过程中会阻塞）  （异步只需要I/O操作完成的通知，并不主动读写数据，由操作系统内核完成数据的读写）</strong>  </p>
+<p><strong>异步和非阻塞的区别： 异步：调用在发出之后，这个调用就直接返回，不管有无结果。（异步是过程） 非阻塞：在不能立刻得到结果之前，该调用不会阻塞当前线程。（非阻塞是状态）</strong> </p>
+<p><strong>总结： 阻塞、非阻塞、多路IO复用，都是同步IO，异步必定是非阻塞的，所以不存在异步阻塞和异步非阻塞的说法</strong></p></div>
+	<hr>
+	<h2>Comments</h2>
+</div>
+		</div>
+	</div> 	<!-- <hr> -->
+</div> <!-- /container -->
+<footer class="aw-footer bg-danger">
+	<div class="container"> <!-- footer -->
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1">
+				<div class="row">
+					<div class="col-md-3">
+						<h4>Navigation</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="">Timmyxu的技术博客</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Author</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="#">You can add links in your config file</a></li>
+							<li><a href="#">Another social link</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Categories</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="/category/技术.html">技术 (10)</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Links</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="http://getpelican.com/">Pelican</a></li>
+							<li><a href="http://python.org/">Python.org</a></li>
+							<li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+							<li><a href="#">You can modify those links in your config file</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 text-center center-block aw-bottom">
+			<p>&copy; Timmy 2016</p>
+			<p>Powered by Pelican</p>
+		</div>
+	</div>
+</div>
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+	$("div.collapseheader").click(function () {
+		$header = $(this).children("span").first();
+		$codearea = $(this).children(".input_area");
+		$codearea.slideToggle(500, function () {
+			$header.text(function () {
+				return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+			});
+		});
+	});
+});
+</script>
+</body>
+</html>
